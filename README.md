@@ -8,7 +8,7 @@ Fruit Match Platform Game meyveleri eşleştirme ve doğru kombinasyonları plat
 - **İtme Mekaniği**: Farklı meyveler platforma atıldığında, platform bu meyveyi iter.
 - **Basit Kontroller**: Oyuncular meyveleri platforma sürükleyerek hareket ettirir.
 
--
+
 ## Sistem Gereksinimleri
 - **Unity Versiyonu**: Unity 2020.3 veya üstü.
 - **Desteklenen Platformlar**: Windows, MacOS, Android.
