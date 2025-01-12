@@ -19,4 +19,4 @@ Fruit Match Platform Game meyveleri eşleştirme ve doğru kombinasyonları plat
 
 
 ## Oyun Linki
-https://play.unity.com/en/games/7482ab34-dfc6-46c9-9970-3f0e75529138/webgl
+https://play.unity.com/en/games/d024b117-a95a-4f14-ac2d-646048d5bf79/web
