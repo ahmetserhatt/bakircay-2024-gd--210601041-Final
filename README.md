@@ -10,6 +10,7 @@ Fruit Match Platform Game meyveleri eşleştirme ve doğru kombinasyonları plat
 - **2x Mekaniği**: Aynı meyveler atılınca skora +10 puan eklenir. 
 - **reset Mekaniği**: Oyun en baştan tekrardan başlar.
 - **Effect**: Aynı meyveler platforma atılınca platformdan effect çıkar.
+- **Fruit Count**: Ekranda kalan meyvelerin sayısını güncel olarak tutar.
 
 ## Not
 Oyundaki tüm eşleştirmeleri yapınca oyun sonunda meyveler tekrardan yukarıdan aşağı atılır ve skor tablosu değişmeden oyuna devam edilir.
