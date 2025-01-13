@@ -7,7 +7,12 @@ Fruit Match Platform Game meyveleri eşleştirme ve doğru kombinasyonları plat
 - **Skor Mekaniği**: Aynı meyveler atılınca skora +5 puan eklenir. Kalan meyveler ekranın sol üstünde tutulur.
 - **İtme Mekaniği**: Farklı meyveler platforma atıldığında, platform bu meyveyi iter.
 - **Basit Kontroller**: Oyuncular meyveleri platforma sürükleyerek hareket ettirir.
+- **2x Mekaniği**: Aynı meyveler atılınca skora +10 puan eklenir. 
+- **reset Mekaniği**: Oyun en baştan tekrardan başlar.
+- **Effect**: Aynı meyveler platforma atılınca platformdan effect çıkar.
 
+## Not
+Oyundaki tüm eşleştirmeleri yapınca oyun sonunda meyveler tekrardan yukarıdan aşağı atılır ve skor tablosu değişmeden oyuna devam edilir.
 
 ## Sistem Gereksinimleri
 - **Unity Versiyonu**: Unity 2020.3 veya üstü.
@@ -19,4 +24,4 @@ Fruit Match Platform Game meyveleri eşleştirme ve doğru kombinasyonları plat
 
 
 ## Oyun Linki
-https://play.unity.com/en/games/d024b117-a95a-4f14-ac2d-646048d5bf79/web
+https://play.unity.com/en/games/57981ad3-d8c4-40f1-a817-8f8d551a507d/webgl
