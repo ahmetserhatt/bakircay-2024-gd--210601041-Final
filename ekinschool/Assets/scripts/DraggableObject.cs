@@ -1,5 +1,5 @@
-using System;
-using TMPro;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class DraggableObject : MonoBehaviour
@@ -13,13 +13,13 @@ public class DraggableObject : MonoBehaviour
     private bool isDragging = false;
     public SimplePlatform _sp;
     private float elapsedTime = 0;
-    public float height = 5f;
+    public float height = 3f;
     private bool isBack;
     public float dragOffsetY = 0.5f;
     private Vector3 screenPoint;
     private Vector3 offset;
     private float initialY;
-    private float maxDragHeight = 1.5f;
+    private float maxDragHeight = 1f;
 
     void Start()
     {
@@ -67,10 +67,18 @@ public class DraggableObject : MonoBehaviour
             Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
             Vector3 currentPosition = mainCamera.ScreenToWorldPoint(currentScreenPoint) + offset;
 
-            currentPosition.y = Mathf.Clamp(currentPosition.y, initialY, initialY + maxDragHeight);
-            rb.MovePosition(currentPosition);
+            // 🎯 **Hassasiyet ayarı ekle**
+            float dragSpeed = 10f; // **Hassasiyet faktörü (Bunu artırarak hassasiyeti artırabilirsin)**
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, currentPosition, dragSpeed * Time.deltaTime);
+
+            // **Yükseklik sınırlamasını daha hassas yap**
+            smoothedPosition.y = Mathf.Clamp(smoothedPosition.y, initialY, initialY + maxDragHeight);
+
+            // **Doğrudan Transform değiştirerek hassasiyeti artır**
+            transform.position = smoothedPosition;
         }
     }
+
 
     void OnMouseUp()
     {
@@ -87,6 +95,7 @@ public class DraggableObject : MonoBehaviour
             if (_sp.CurrentFruit == null)
             {
                 _sp.CurrentFruit = this;
+                FreezeOnPlatform();
             }
             else if (_sp.CurrentFruit != this && _sp.CurrentFruit.FruitName == this.FruitName)
             {
@@ -94,10 +103,25 @@ public class DraggableObject : MonoBehaviour
                 this.gameObject.layer = 6;
                 _sp.CurrentFruit.rb.isKinematic = false;
                 _sp.CurrentFruit.gameObject.layer = 6;
+
+                // 🎆 SimplePlatform'daki efekti çağır!
+                _sp.PlayMatchEffect(transform.position);
+
+                // 🏆 Skor arttırma işlemi (2X skor desteği eklendi)
+                _sp.UpdateScore(5);
+
+                // **Eşleşme sayısını artır ve oyunu kontrol et**
+                _sp.IncreaseMatchCount();
+
+                // 🛠 İki meyvenin de yok edilmesini sağla
+                GameObject matchedFruit = _sp.CurrentFruit.gameObject;
                 _sp.CurrentFruit = null;
-                _sp.Score += 5;
-                _sp.ScoreText.text = "Score:" + _sp.Score;
+
+                // **Meyve sayısını 2 azalt**
                 _sp.FruitsCountsText.text = "Fruit Count: " + (_sp.Fruits.childCount - 2).ToString();
+
+                // 🛠 Destroy işlemini geciktirerek çökmeyi önle
+                StartCoroutine(DestroyMatchedFruits(matchedFruit));
             }
             else if (_sp.CurrentFruit != this && _sp.CurrentFruit.FruitName != this.FruitName)
             {
@@ -105,19 +129,28 @@ public class DraggableObject : MonoBehaviour
                 rb.isKinematic = true;
             }
         }
+    }
 
-        if (other.transform.name == "Destory Trigger Area")
-        {
-            Destroy(this.gameObject);
-            if (_sp.Fruits.childCount <= 1)
-            {
-                _sp.ComplatePanel.SetActive(true);
-            }
-        }
+    // **Coroutine ile iki meyveyi de gecikmeli yok et**
+    private IEnumerator DestroyMatchedFruits(GameObject matchedFruit)
+    {
+        yield return new WaitForSeconds(0.2f); // 0.2 saniye bekle
+        Destroy(matchedFruit); // İlk meyveyi sil
+        Destroy(gameObject);   // İkinci meyveyi sil
+    }
 
-        if (other.transform.name == "WrongFallArea")
+
+
+    private void FreezeOnPlatform()
+    {
+        rb.isKinematic = true;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        Collider collider = GetComponent<Collider>();
+        if (collider != null)
         {
-            transform.position = fallposition;
+            collider.enabled = false;
         }
     }
 
